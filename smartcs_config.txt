@@ -1,0 +1,63 @@
+#
+echo "SYSTEM configuration..."
+#
+set timezone Tokyo
+#
+#
+echo "IP configuration..."
+#
+set hostname SmartCS
+set ipaddr eth1 192.168.0.2/24
+set ipaddr eth2 192.168.1.2/24
+#
+#
+echo "User configuration..."
+#
+create user setup group setup uid 198
+create user verup group verup uid 199
+create user log group log uid 200
+create user somebody group normal uid 100
+create user show_int group extusr uid 401 encrypt 6l52qVkpq6Y/VQztWWFRBb3Br3rpl.
+set user show_int permission ttymanage on
+set user show_int port 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48
+create user showint group portusr uid 501 encrypt aT92yl1VIepw3CQHU87ILfpIy5YMJ1
+set user showint port 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48
+#
+#
+echo "Portd configuration..."
+#
+set portd service exclusive off
+set portd auth basic
+set portd connect select
+set portd tty 1 label cat2960
+set portd tty 1 limit rw 2 ro 3
+set portd tty 1 session both both
+set portd tty 1 cmdchar 1
+set portd tty 2 label switch-A
+set portd tty 2 session both both
+set portd tty 3 label switch-B
+set portd tty 3 session both both
+set portd tty 4 label switch-C
+set portd tty 4 session both both
+set portd tty 5 label switch-D
+set portd tty 5 session both both
+set portd tty 6 label switch-E
+set portd tty 6 session both both
+#
+#
+echo "Ttymanage configuration..."
+#
+enable ttymanage
+#
+#
+echo "Network service configuration..."
+#
+set sshd auth basic
+enable sshd
+create allowhost all service telnetd
+create allowhost all service portd telrw all
+create allowhost all service sshd
+create allowhost all service portd sshrw all
+create allowhost all service portd sshro all
+create allowhost all service portd telro all
+#
