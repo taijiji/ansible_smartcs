@@ -1,0 +1,35 @@
+---
+- name: "SmartCS経由でCisco Cat2960の初期設定を自動化"
+  hosts: SmartCS
+  gather_facts: no
+
+  vars:
+  - ansible_user: show_int
+  - ansible_password: show_int 
+  - ansible_connection: ansible.netcommon.network_cli
+  - ansible_network_os: seiko.smartcs.smartcs
+  - ansible_command_timeout: 120
+  - Router1:
+      hostname: Router1
+      ip_vlan100: 192.168.0.254
+      ip_vlan200: 192.168.1.254
+
+  tasks:
+  - name: 'Catalyst2960 初期コンフィグの投入'
+    seiko.smartcs.smartcs_tty_command:
+      tty: '1'
+      src: 'ios_config.jinja2'
+      recvchar:
+      - 'Switch>'
+      - 'Switch#'
+      - 'Switch(config)#'
+      - 'Router1>'
+      - 'Router1#'
+      - 'Router1(config)#'
+      - 'Router1(config-line)#'
+      - 'Router1(ca-trustpoint)#'
+      - 'Router1(config-cert-chain)#'
+      - 'Router1(config-pki-hexmode)#'
+      - 'Router1(config-vlan)#'
+      - 'Router1(config-if)#'
+      - 'Press RETURN to get started.'

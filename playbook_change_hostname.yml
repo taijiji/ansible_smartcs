@@ -1,0 +1,38 @@
+---
+- name: "SmartCS経由でCisco Cat2960の初期設定を自動化"
+  hosts: SmartCS
+  gather_facts: no
+
+  vars:
+  - ansible_user: show_int
+  - ansible_password: show_int 
+  - ansible_connection: ansible.netcommon.network_cli
+  - ansible_network_os: seiko.smartcs.smartcs
+  - ansible_command_timeout: 30
+
+  tasks:
+  - name: 'Catalyst2960 ホスト名の変更'
+    seiko.smartcs.smartcs_tty_command:
+      tty: '1'
+      sendchar:
+      - '__NL__'
+      - 'enable'
+      - 'terminal length 0'
+      - 'configure terminal'
+      - 'hostname Router1'
+      - 'exit'
+      - 'exit'
+      recvchar:
+      - 'Switch>'
+      - 'Switch#'
+      - 'Switch(config)#'
+      - 'Router1>'
+      - 'Router1#'
+      - 'Router1(config)#'
+      - 'Router1(config-line)#'
+      - 'Press RETURN to get started.'
+    register: result
+
+  - name: '実行結果の表示（デバッグ用）'
+    debug:
+      msg: '{{ result.stdout_lines }}'

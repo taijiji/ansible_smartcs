@@ -1,0 +1,38 @@
+__NL__
+enable
+terminal length 0
+configure terminal
+
+
+hostname {{ Router1.hostname }}
+enable secret 5 $1$akCt$bkvFoke4MaSMsntaIzLSJ0
+username showint secret 5 $1$JFKJ$IpL7ux1s0c9enWPx8nLpH.
+aaa new-model
+no ip domain-lookup
+ip domain-name show_int
+vlan internal allocation policy ascending
+vlan 100,200
+interface GigabitEthernet0/1
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet0/2
+ switchport access vlan 200
+ switchport mode access
+!
+interface Vlan100
+ ip address {{ Router1.ip_vlan100 }} 255.255.255.0
+ no ip route-cache
+ exit
+interface Vlan200
+ ip address {{ Router1.ip_vlan200 }} 255.255.255.0
+ no ip route-cache
+ exit
+line vty 0 4
+ login local
+ transport input telnet
+line vty 5 15
+ login local
+ transport input telnet
+end
+exit
