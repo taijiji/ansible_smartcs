@@ -1,5 +1,5 @@
 # ansible_smartcs
-Zero Touch Provisioning for Ansible + SmartCS + Cisco Catalyst 2960
+Zero Touch Provisioning for Cisco Catalyst 2960(factory-default) using Ansible + SmartCS [seiko.smartcs.smartcs_tty_command](https://galaxy.ansible.com/seiko/smartcs)
 
 Presentation + Demo: TBD
 
